@@ -7,6 +7,7 @@ const routes = require('./routes/routes');
 const shop = express(); // here is beginning our app
 // options
 const PORT = process.env.PORT || 3000;
+
 const staticOptions = {
     dotfiles: 'ignore',
     etag: false,

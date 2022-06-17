@@ -3,10 +3,10 @@ const express = require('express'); // for our app
 const mongoose = require('mongoose'); // for connection with database
 const cookieParser = require('cookie-parser'); // for reciving and creating our cookies
 const path = require('path'); // for better using path to files
-
+const routes = require('./routes/routes');
 const shop = express(); // here is beginning our app
 // options
-const PORT = '5050';
+const PORT = process.env.PORT || 3000;
 const staticOptions = {
     dotfiles: 'ignore',
     etag: false,
@@ -25,20 +25,7 @@ shop.use(express.urlencoded({extended: true})); //it parses incoming request fro
 shop.use(express.static( path.join(__dirname + '/public'), staticOptions));
 shop.set('view engine', 'ejs');
 shop.set('views', path.join(__dirname + '/views'));
-
-// main endpoints and routes
-/*
-    /shop/index         - main site
-    /shop/products      - list of products
-    /shop/add           - here we want add product to our database
-    /shop/login         - login panel
-    /shop/signup        - signup/register panel
-
-*/
-shop.get('/', (req, resp) => {
-    resp.render('index');
-});
-
+shop.use('/shop', routes);
 shop.listen(PORT, () => {
     console.log(`Flower Shop working on port ${PORT}\t${Date()}`);
 })
